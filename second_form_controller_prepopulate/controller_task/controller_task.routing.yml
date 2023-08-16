@@ -1,0 +1,20 @@
+controller_task.example:
+  path: '/node/{node}/details'
+  defaults:
+    _title: 'controller'
+    _controller: '\Drupal\controller_task\Controller\ControllerTaskController::taskTwo'
+  requirements:
+    _permission: 'static perm for controller'
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: entity:node
+
+token_form.settings:
+  path: 'token-form'
+  defaults:
+    _title: 'Token Form'
+    _form: 'Drupal\controller_task\Form\TokenForm'
+  requirements:
+    _permission: 'access content'

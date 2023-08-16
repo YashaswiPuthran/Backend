@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * @file
+ * @file
+ * @file
+ * .*/
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_update_N().
+ *
+ * Create the tables for country, state, and district.
+ */
+
+/**
+ *
+ */
+function dependent_update_100202()
+{
+  $schema = Database::getConnection()->schema();
+  $connection = Database::getConnection();
+  if (!$schema->tableExists('electronics')) {
+    $table = ['description' => 'electronic items', 'fields' => ['id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE], 'name' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE]], 'primary key' => ['id']];
+    $schema->createTable('electronics', $table);
+  }
+
+  if (!$schema->tableExists('model')) {
+    $table = ['description' => 'model', 'fields' => ['id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE], 'item_id' => ['type' => 'int', 'not null' => TRUE, 'description' => 'Foreign key to model table'], 'name' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE]], 'primary key' => ['id'], 'foreign keys' => ['item_id' => ['table' => 'country', 'columns' => ['item_id' => 'id']]]];
+    $schema->createTable('model', $table);
+  }
+
+  if (!$schema->tableExists('color')) {
+    $table = ['description' => 'color table', 'fields' => ['id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE], 'model_id' => ['type' => 'int', 'not null' => TRUE, 'description' => 'Foreign key to state table'], 'name' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE]], 'primary key' => ['id'], 'foreign keys' => ['state_id' => ['table' => 'model', 'columns' => ['model_id' => 'id']]]];
+    $schema->createTable('color', $table);
+  }
+
+  $connection->insert('electronics')
+  ->fields(['name'])
+  ->values(['mobile'])
+  ->values(['laptop'])
+  ->values(['tabs'])
+  ->execute();
+  $connection->insert('model')
+  ->fields(['item_id', 'name'])
+  ->values([1, 'samsung'])
+  ->values([2, 'redmi'])
+  ->values([3, 'moto'])
+  ->values([1, 'oppo'])
+  ->values([3, 'vivo'])
+  ->values([2, 'oneplus'])
+  ->values([3, 'iphone'])
+  ->values([1, 'realme'])
+  ->values([1, 'infinix'])
+  ->values([2, 'lg'])
+  ->values([3, 'nokia'])
+  ->values([2, 'lenovo'])
+  ->values([1, 'blackberry'])
+  ->values([2, 'micromax'])
+  ->values([3, 'asus'])
+  ->values([2, 'dell'])
+  ->values([1, 'hp'])
+  ->values([2, 'honor'])
+  ->values([3, 'lava'])
+  ->values([3, 'panasonic'])
+  ->values([1, 'siemens'])
+  ->values([1, 'sony'])
+  ->values([2, 'tcl'])
+  ->values([3, 'techno'])
+  ->values([1, 'toshiba'])
+  ->execute();
+  $connection->insert('color')
+  ->fields(['model_id', 'name'])
+  ->values([1, 'black'])
+  ->values([1, 'grey'])
+  ->values([1, 'blue'])
+  ->values([2, 'black'])
+  ->values([2, 'grey'])
+  ->values([2, 'blue'])
+  ->values([3, 'black'])
+  ->values([3, 'grey'])
+  ->values([3, 'blue'])
+  ->values([4, 'black'])
+  ->values([4, 'grey'])
+  ->values([4, 'blue'])
+  ->values([5, 'black'])
+  ->values([5, 'grey'])
+  ->values([5, 'blue'])
+  ->values([6, 'black'])
+  ->values([6, 'grey'])
+  ->values([6, 'blue'])
+  ->values([7, 'black'])
+  ->values([7, 'grey'])
+  ->values([7, 'blue'])
+  ->values([8, 'black'])
+  ->values([8, 'grey'])
+  ->values([8, 'blue'])
+  ->values([9, 'black'])
+  ->values([9, 'grey'])
+  ->values([9, 'blue'])
+  ->values([10, 'black'])
+  ->values([10, 'grey'])
+  ->values([10, 'blue'])
+  ->values([11, 'black'])
+  ->values([11, 'grey'])
+  ->values([11, 'blue'])
+  ->values([12, 'black'])
+  ->values([12, 'grey'])
+  ->values([12, 'blue'])
+  ->values([13, 'black'])
+  ->values([13, 'grey'])
+  ->values([13, 'blue'])
+  ->values([14, 'black'])
+  ->values([14, 'grey'])
+  ->values([14, 'blue'])
+  ->values([15, 'black'])
+  ->values([15, 'grey'])
+  ->values([15, 'blue'])
+  ->values([16, 'black'])
+  ->values([16, 'grey'])
+  ->values([16, 'blue'])
+  ->values([17, 'black'])
+  ->values([17, 'grey'])
+  ->values([17, 'blue'])
+  ->values([18, 'black'])
+  ->values([18, 'grey'])
+  ->values([18, 'blue'])
+  ->values([19, 'black'])
+  ->values([19, 'grey'])
+  ->values([19, 'blue'])
+  ->values([20, 'black'])
+  ->values([20, 'grey'])
+  ->values([20, 'blue'])
+  ->values([21, 'black'])
+  ->values([21, 'grey'])
+  ->values([21, 'blue'])
+  ->values([22, 'black'])
+  ->values([22, 'grey'])
+  ->values([22, 'blue'])
+  ->values([23, 'black'])
+  ->values([23, 'grey'])
+  ->values([23, 'blue'])
+  ->values([24, 'black'])
+  ->values([24, 'grey'])
+  ->values([24, 'blue'])
+  ->values([25, 'black'])
+  ->values([25, 'grey'])
+  ->values([25, 'blue'])
+
+
+  ->execute();
+}

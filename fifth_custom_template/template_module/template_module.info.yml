@@ -1,0 +1,5 @@
+name: 'Template Module'
+type: module
+description: 'Template Task'
+package: Custom
+core_version_requirement: ^10

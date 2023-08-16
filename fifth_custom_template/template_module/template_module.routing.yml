@@ -1,0 +1,15 @@
+config_form.template:
+  path: '/config-template'
+  defaults:
+    _controller: '\Drupal\template_module\Controller\ControllerTemplate::configTemplate'
+    _title: 'Config Form Template Controller'
+  requirements:
+    _permission: 'access content'
+
+config_form.settings_form:
+  path: '/form-template'
+  defaults:
+    _title: 'Config Form '
+    _form: 'Drupal\template_module\Form\ConfigForm'
+  requirements:
+    _permission: 'access content'

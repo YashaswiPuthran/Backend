@@ -1,0 +1,7 @@
+block.settings.yes:
+  type: block_settings
+  label: 'new plugin task block'
+  mapping:
+    example:
+      type: string
+      label: Example

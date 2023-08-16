@@ -1,0 +1,5 @@
+name: 'EventSub Task'
+type: module
+description: 'X gen Task'
+package: Custom
+core_version_requirement: ^10

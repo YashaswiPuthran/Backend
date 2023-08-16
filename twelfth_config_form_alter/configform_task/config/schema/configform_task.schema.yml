@@ -1,0 +1,8 @@
+# Schema for the configuration files of the Configform task module.
+configform_task.settings:
+  type: config_object
+  label: 'Configform task settings'
+  mapping:
+    example:
+      type: string
+      label: 'Example'

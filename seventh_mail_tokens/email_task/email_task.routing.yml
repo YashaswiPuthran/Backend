@@ -1,0 +1,9 @@
+email_task.token_form:
+  path: "/token-task"
+  defaults:
+    _form: '\Drupal\email_task\Form\MailForm'
+    _title: "TOKEN FORM "
+  requirements:
+    _permission: "access content"
+  options:
+    _admin_route: TRUE

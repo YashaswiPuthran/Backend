@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Comment.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function configform_task_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // print_r($form_id);
+  // exit;
+  if ($form_id == 'node_article_form') {
+    $config = \Drupal::config('configform_task.settings');
+    $default_title = $config->get('default_title');
+    $advanced_box = $config->get('advanced_box');
+    $tag_reference = $config->get('tag_reference');
+
+    // print_r(array_keys($form)); exit;
+    // print_r(array($form['field_tags']));
+    // exit;.
+    $form['title']['widget'][0]['value']['#default_value'] = $default_title;
+    // $term = Vocabulary::load($tag_reference);
+    if ($tag_reference) {
+      $tags = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tag_reference);
+      $form['field_tags']['widget']['target_id']['#default_value'] = $tags;
+    }
+    $form['field_advanced']['widget']['value']['#default_value'] = $advanced_box;
+  }
+}

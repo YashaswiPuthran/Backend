@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Implement hook_schema().
+ */
+
+/**
+ * Create table.
+ */
+function controller_task_schema()
+{
+  $schema['form_table'] = [
+    'description' => 'Custom values',
+    'fields' => [
+      'id' => [
+        'description' => 'Holds the id',
+        'type' => 'serial',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'title' => [
+        'description' => 'Title',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+      ],
+      'user_reference' => [
+        'description' => 'User ',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}

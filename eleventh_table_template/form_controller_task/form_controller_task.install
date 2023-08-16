@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Implements hook_schema().
+ */
+
+/**
+ * Creating a table.
+ */
+function form_controller_task_schema() {
+  $schema['form_controller'] = [
+    'description' => 'Form Task Table',
+    'fields' => [
+      'id' => [
+        'description' => 'number',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+
+      'firstname' => [
+        'description' => 'Firstname',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ],
+
+      'lastname' => [
+        'description' => 'Lastname',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ],
+
+      'email' => [
+        'description' => 'Email',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ],
+
+      'phonenum' => [
+        'description' => 'Phone',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ],
+
+      'gender' => [
+        'description' => 'Gender',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ],
+    ],
+
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}

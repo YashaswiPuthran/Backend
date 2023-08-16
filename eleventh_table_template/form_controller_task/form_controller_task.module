@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Implement hook_theme().
+ */
+
+/**
+ * Function.
+ */
+function form_controller_task_theme($existing, $type, $theme, $path) {
+  return ['task_control' => ['variables' => ['rows' => '']]];
+}

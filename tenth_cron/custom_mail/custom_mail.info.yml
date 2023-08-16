@@ -1,0 +1,5 @@
+name: 'custom mail'
+type: module
+description: 'Module mail'
+package: Custom
+core_version_requirement: ^10

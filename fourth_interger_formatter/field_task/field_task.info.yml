@@ -1,0 +1,5 @@
+name: 'field task'
+type: module
+description: 'field formatter'
+package: Custom
+core_version_requirement: ^10

@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Comment about the purpose of this file.
+ */
+
+/**
+ * Implements hook_theme().
+ *
+ * This hook is used to define theme implementations provided by this module.
+ */
+function template_module_theme($existing, $type, $theme, $path) {
+  return [
+    'configform_template' => [
+      'variables' => [
+        'title' => NULL,
+        'paragraph' => NULL,
+        'color_code' => NULL,
+      ],
+    ],
+  ];
+}

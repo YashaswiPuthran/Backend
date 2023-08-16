@@ -1,0 +1,39 @@
+<table>
+	<thead>
+		<tr>
+			<th>id
+			</th>
+			<th>firstname
+			</th>
+			<th>lastname
+			</th>
+			<th>email</th>
+			<th>phonenum</th>
+			<th>gender</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for row in rows %}
+			<tr>
+				<td>
+					{{ row.id }}
+				</td>
+				<td>
+					{{ row.firstname }}
+				</td>
+				<td>
+					{{ row.lastname }}
+				</td>
+				<td>
+					{{ row.email }}
+				</td>
+				<td>
+					{{ row.phonenum }}
+				</td>
+				<td>
+					{{ row.gender }}
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>

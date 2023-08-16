@@ -1,0 +1,15 @@
+entity_task.nodecontroller: #machine name
+  path: '/node-task'  #giving path to CustomController.php
+  defaults:
+    _controller: '\Drupal\entity_task\Controller\NodeValues::fetchNode2' #path and function name is defined here
+    _title: 'Node Exercise' #title given for controller.php
+  requirements:
+    _permission: 'access content' #permission created for controller
+
+entity_task.refcontroller: #machine name
+  path: '/ref-task'  #giving path to CustomController.php
+  defaults:
+    _controller: '\Drupal\entity_task\Controller\RefNode::fetchNode2' #path and function name is defined here
+    _title: 'Ref Exercise' #title given for controller.php
+  requirements:
+    _permission: 'access content' #permission created for controller

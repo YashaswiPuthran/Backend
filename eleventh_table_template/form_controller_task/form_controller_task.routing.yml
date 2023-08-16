@@ -1,0 +1,15 @@
+form_controller_task.example:
+  path: '/control-form'
+  defaults:
+    _title: 'Form'
+    _form: 'Drupal\form_controller_task\Form\ExampleForm'
+  requirements:
+    _permission: 'access content'
+
+custom_controller.content:
+  path: '/controller-db'
+  defaults:
+    _title: 'Form'
+    _controller: 'Drupal\form_controller_task\Controller\CustomController::content'
+  requirements:
+    _permission: 'access content'

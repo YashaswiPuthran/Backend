@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks and functions for custom mail module.
+ */
+
+use Drupal\Core\Render\Markup;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_cron().
+ */
+function custom_mail_cron() {
+  // Get the last cron run time from the state.
+  $state = \Drupal::state()->get('lastcronrun');
+  $lastRun = $state;
+  $current = \Drupal::time()->getCurrentTime();
+
+  // If the last run time is empty or at least 1 second has passed, proceed.
+  if (empty($lastRun) || ($current - $lastRun) >= 1) {
+    // Query for nodes of type 'logs' created since the last run.
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'logs')
+      ->condition('created', $lastRun, '>')
+      ->accessCheck(FALSE);
+    $nids = $query->execute();
+
+    foreach ($nids as $nid) {
+      $node = Node::load($nid);
+
+      // Load configuration settings.
+      $config = \Drupal::config('custom_mail.settings');
+      $message = $config->get('subject');
+      $text = $config->get('textarea');
+
+      // Replace tokens in the subject and text.
+      $token_service = \Drupal::token();
+      $sub_message = $token_service->replace($message, ['node' => $node], ['clear' => TRUE]);
+      $sub_text = $token_service->replace($text, ['node' => $node], ['clear' => TRUE]);
+
+      // Prepare email parameters.
+      $params = [
+        'subject' => $sub_message,
+        'textarea' => $sub_text,
+      ];
+
+      // Set email properties.
+      $module = 'custom_mail';
+      $key = 'email_cron';
+      $to = "yashaswiputhran18@gmail.com";
+      $langcode = \Drupal::currentUser()->getPreferredLangcode();
+
+      // Send the email.
+      $mailManager = \Drupal::service('plugin.manager.mail');
+      $send = TRUE;
+      $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+
+      if ($result['result'] !== TRUE) {
+        \Drupal::messenger()->addMessage(t('There was a problem sending your message and it was not sent'), 'error');
+      }
+      else {
+        \Drupal::messenger()->addMessage(t('Your message has been sent.'), 'status');
+      }
+    }
+    // Update the last cron run time in the state.
+    \Drupal::state()->set('lastcronrun', $current);
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function custom_mail_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'email_cron':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = Markup::create($params['textarea']);
+      break;
+  }
+}

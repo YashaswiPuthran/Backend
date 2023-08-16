@@ -1,0 +1,7 @@
+new_form.example:
+  path: '/new-form'
+  defaults:
+    _title: 'Example'
+    _form: 'Drupal\new_form\Form\NewForm'
+  requirements:
+    _permission: 'access content'

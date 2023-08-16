@@ -1,0 +1,7 @@
+token_form.settings:
+  path: 'tkn-form'
+  defaults:
+    _title: 'Token Form'
+    _form: 'Drupal\custom_mail\Form\CustomMail'
+  requirements:
+    _permission: 'access content'

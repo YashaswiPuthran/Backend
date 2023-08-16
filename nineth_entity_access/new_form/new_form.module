@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for New Form module.
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_entity_access().
+ */
+function new_form_entity_access($entity, $operation, AccountInterface $account)
+{
+  if ($operation == 'view' && $entity->getEntityTypeId() == 'node') {
+    $config = \Drupal::config('new_form.settings');
+    $selected_role = $config->get('selected_roles');
+    $selected_content_types = $config->get('selected_content_types');
+
+    if (!in_array($selected_role, $account->getRoles())) {
+      return AccessResult::allowed();
+    }
+    if (
+      in_array($selected_role, $account->getRoles()) &&
+      in_array($entity->bundle(), $selected_content_types)
+    ) {
+      return AccessResult::allowed();
+    } else {
+      return AccessResult::forbidden();
+    }
+  }
+}
