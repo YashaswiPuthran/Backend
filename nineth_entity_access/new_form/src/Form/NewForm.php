@@ -2,24 +2,52 @@
 
 namespace Drupal\new_form\Form;
 
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\node\Entity\NodeType;
+use Drupal\user\Entity\Role;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Implements the Example configuration form.
+ * Extending base class.
  */
-class NewForm extends FormBase {
+class NewForm extends ConfigFormBase {
+
+  /**
+   * The entity field manager.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
+   * Constructs an AutoParagraphForm object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entityTypeManager.
+   */
+  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+    $this->entityTypeManager = $entityTypeManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.manager')
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'new_task_form';
+    return 'new_form_settings_form';
   }
 
   /**
-   * Comment.
+   * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
     return ['new_form.settings'];
@@ -29,63 +57,61 @@ class NewForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $selected_role = $this->getRoles();
-    $selected_content_types = $this->getContentTypes();
+    $roles = Role::loadMultiple();
+    $role_options = [];
+
+    foreach ($roles as $role_id => $role) {
+      $role_options[$role_id] = $role->label();
+    }
+
+    $config = $this->config('new_form.settings');
+
+    $existingContentTypeOptions = $this->getExistingContentTypes();
 
     $form['selected_roles'] = [
       '#type' => 'select',
-      '#title' => 'Select a Role',
-      '#options' => $selected_role,
+      '#title' => $this->t('Select Role'),
+      '#options' => $role_options,
+      '#default_value' => $config->get('selected_roles'),
     ];
 
-    $form['selected_content_types'] = [
+    $form['content_types'] = [
       '#type' => 'checkboxes',
-      '#title' => $this->t('Select Content Types'),
-      '#options' => $selected_content_types,
+      '#title' => $this->t('Content Types'),
+      '#options' => $existingContentTypeOptions,
+      '#empty_option' => $this->t('- Select an existing content type -'),
+      '#default_value' => $config->get('content_types', []),
+      '#required' => TRUE,
     ];
 
-    $form['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Save Configuration'),
-    ];
-
-    return $form;
-  }
-
-  /**
-   * Comment.
-   */
-  private function getRoles() {
-    $selected_role = [];
-    foreach (user_roles(TRUE) as $role) {
-      $selected_role[$role->id()] = $role->label();
-    }
-    return $selected_role;
-  }
-
-  /**
-   * Comment.
-   */
-  private function getContentTypes() {
-    $selected_content_types = [];
-    $node_types = NodeType::loadMultiple();
-    foreach ($node_types as $node_type) {
-      $selected_content_types[$node_type->id()] = $node_type->label();
-    }
-    return $selected_content_types;
+    return parent::buildForm($form, $form_state);
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $selected_role = $form_state->getValue('selected_roles');
-    $selected_content_types = $form_state->getValue('selected_content_types');
-    \Drupal::configFactory()->getEditable('new_form.settings')
-      ->set('selected_roles', $selected_role)
-      ->set('selected_content_types', $selected_content_types)
-      ->save();
+    $config = $this->config('config_user.settings');
 
+    $config->set('selected_content_types', $form_state->getValue('selected_content_types'));
+    $config->set('selected_roles', $form_state->getValue('selected_roles'));
+    $config->save();
+    parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * Returns a list of all the content types currently installed.
+   *
+   * @return array
+   *   An array of content types.
+   */
+  public function getExistingContentTypes() {
+    $types = [];
+    $contentTypes = $this->entityTypeManager->getStorage('node_type')->loadMultiple();
+    foreach ($contentTypes as $contentType) {
+      $types[$contentType->id()] = $contentType->label();
+    }
+    return $types;
   }
 
 }

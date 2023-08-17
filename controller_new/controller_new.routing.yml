@@ -1,7 +1,0 @@
-controller_new.example:
-  path: '/clone'
-  defaults:
-    _title: 'Example'
-    _controller: '\Drupal\controller_new\Controller\ControllerNew::cloneNode'
-  requirements:
-    _permission: 'access content'
