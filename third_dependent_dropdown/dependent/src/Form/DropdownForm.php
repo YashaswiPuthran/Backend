@@ -123,7 +123,7 @@ class DropdownForm extends FormBase {
    * Calling the Function.
    */
   private function getItemOptions() {
-    $query = Database::getConnection()->select('electronics', 'i');
+    $query = $this->database->select('electronics', 'i');
     $query->fields('i', ['id', 'name']);
     $result = $query->execute();
     $item = [];
@@ -140,7 +140,7 @@ class DropdownForm extends FormBase {
    */
   private function getModelOptions($selected_item_id) {
 
-    $query = Database::getConnection()->select('model', 's');
+    $query = $this->database->select('model', 's');
     $query->fields('s', ['id', 'name']);
     $query->condition('s.item_id', $selected_item_id);
     $result = $query->execute();
