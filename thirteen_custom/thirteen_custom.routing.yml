@@ -1,0 +1,7 @@
+thirteen_custom.example:
+  path: '/cust'
+  defaults:
+    _title: 'Example'
+    _form: 'Drupal\thirteen_custom\Form\ExampleForm'
+  requirements:
+    _permission: 'access content'
