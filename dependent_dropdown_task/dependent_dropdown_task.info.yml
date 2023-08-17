@@ -1,0 +1,5 @@
+name: 'Dependent dropdown task'
+type: module
+description: 'Dependent Dropdown'
+package: Custom
+core_version_requirement: ^10

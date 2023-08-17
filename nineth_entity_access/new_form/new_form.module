@@ -11,8 +11,7 @@ use Drupal\Core\Session\AccountInterface;
 /**
  * Implements hook_entity_access().
  */
-function new_form_entity_access($entity, $operation, AccountInterface $account)
-{
+function new_form_entity_access($entity, $operation, AccountInterface $account) {
   if ($operation == 'view' && $entity->getEntityTypeId() == 'node') {
     $config = \Drupal::config('new_form.settings');
     $selected_role = $config->get('selected_roles');
@@ -26,7 +25,8 @@ function new_form_entity_access($entity, $operation, AccountInterface $account)
       in_array($entity->bundle(), $selected_content_types)
     ) {
       return AccessResult::allowed();
-    } else {
+    }
+    else {
       return AccessResult::forbidden();
     }
   }

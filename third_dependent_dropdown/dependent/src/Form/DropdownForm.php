@@ -2,9 +2,11 @@
 
 namespace Drupal\dependent\Form;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class for dropdown form.
@@ -12,7 +14,33 @@ use Drupal\Core\Form\FormStateInterface;
 class DropdownForm extends FormBase {
 
   /**
-   * {@inheritdoc} This is a comment.
+   * The Database service.
+   *
+   * @var Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
+   * Constructs DropdownForm.
+   *
+   * @param \Drupal\Core\Database\Connection $database
+   *   The database service.
+   */
+  public function __construct(Connection $database) {
+    $this->database = $database;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('database')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
    */
   public function getFormId() {
     return 'item_form';
@@ -78,21 +106,21 @@ class DropdownForm extends FormBase {
   }
 
   /**
-   *
+   * Calling the Function.
    */
   public function ajaxModelDropdownCallback(array &$form, FormStateInterface $form_state) {
     return $form['model'];
   }
 
   /**
-   *
+   * Calling the Function.
    */
   public function ajaxColorDropdownCallback(array &$form, FormStateInterface $form_state) {
     return $form['color'];
   }
 
   /**
-   *
+   * Calling the Function.
    */
   private function getItemOptions() {
     $query = Database::getConnection()->select('electronics', 'i');
@@ -108,7 +136,7 @@ class DropdownForm extends FormBase {
   }
 
   /**
-   *
+   * Calling the Function.
    */
   private function getModelOptions($selected_item_id) {
 
@@ -125,7 +153,7 @@ class DropdownForm extends FormBase {
   }
 
   /**
-   *
+   * Calling the Function.
    */
   public function getColorByModel($selected_model_id) {
     $query = Database::getConnection()->select('color', 'c');

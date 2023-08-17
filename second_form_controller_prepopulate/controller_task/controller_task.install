@@ -8,8 +8,7 @@
 /**
  * Create table.
  */
-function controller_task_schema()
-{
+function controller_task_schema() {
   $schema['form_table'] = [
     'description' => 'Custom values',
     'fields' => [
