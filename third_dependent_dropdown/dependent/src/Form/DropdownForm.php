@@ -156,7 +156,7 @@ class DropdownForm extends FormBase {
    * Calling the Function.
    */
   public function getColorByModel($selected_model_id) {
-    $query = Database::getConnection()->select('color', 'c');
+    $query = $this->database->select('color', 'c');
     $query->fields('c', ['id', 'name']);
     $query->condition('c.model_id', $selected_model_id);
     $result = $query->execute();
@@ -164,9 +164,10 @@ class DropdownForm extends FormBase {
     $color = [];
     foreach ($result as $row) {
       $color[$row->id] = $row->name;
+
+      return $color;
     }
 
-    return $color;
   }
 
 }
