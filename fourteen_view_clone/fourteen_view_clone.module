@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Provide views data for quick_node_clone.module.
+ */
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function fourteen_view_clone_views_data_alter(&$data) {
+  $data['node']['node_link'] = [
+    'title' => t('view clone link'),
+    'help' => t('It generates the node link for view.'),
+    'field' => [
+      'id' => 'view_clone',
+    ],
+  ];
+}
