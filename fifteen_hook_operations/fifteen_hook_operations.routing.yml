@@ -1,0 +1,9 @@
+fifteen_hook_operations.example:
+  path: '/node/{node}/title'
+  defaults:
+    _controller: '\Drupal\fifteen_hook_operations\Controller\FifteenHookOperationsController::title'
+  requirements:
+    _permission: 'access content'
+  parameters:
+    node:
+      type: entity:node

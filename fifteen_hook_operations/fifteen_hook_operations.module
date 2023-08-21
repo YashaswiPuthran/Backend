@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * @file
+ * @file
+ * .*/
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_entity_operation().
+ */
+
+/**
+ *
+ */
+function fifteen_hook_operations_entity_operation(EntityInterface $entity) {
+  $operations = [];
+  if ($entity->getEntityTypeId() === 'node') {
+    $operations['title_controller'] = ['title' => "Node Title Controller", 'weight' => 200, 'url' => Url::fromRoute('fifteen_hook_operations.example', ['node' => $entity->id()],)];
+  }
+  return $operations;
+}
