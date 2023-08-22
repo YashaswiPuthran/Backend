@@ -1,0 +1,5 @@
+name: 'sixteen_cache_module'
+type: module
+description: 'Cache module'
+package: Custom
+core_version_requirement: ^10

@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for sixteen_cache_module module.
+ */
+
+use Drupal\Core\Cache\Cache;
+use Drupal\node\NodeInterface;
+
+/**
+ * Comment.
+ */
+function sixteen_cache_module_node_presave(NodeInterface $node) {
+  if ($node->getType() == 'News') {
+    $tags = 'marktwo' . $node->id();
+    Cache::invalidateTags([$tags]);
+  }
+}
