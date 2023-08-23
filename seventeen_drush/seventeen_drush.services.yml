@@ -1,0 +1,6 @@
+services:
+  custom_drush.commands:
+    class: \Drupal\seventeen_drush\Commands\MaintenanceModeCommand
+    tags:
+      - { name: drush.command }
+    arguments: ['@messenger', '@state']
